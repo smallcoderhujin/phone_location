@@ -1,0 +1,31 @@
+<VirtualHost *:80>
+ServerName location
+DocumentRoot /var/www/location_web
+
+WSGIDaemonProcess app user=www-data group=www-data threads=5
+WSGIScriptAlias / /var/www/location_web/location.wsgi
+
+ErrorLog ${APACHE_LOG_DIR}/location-error.log
+CustomLog ${APACHE_LOG_DIR}/location-access.log combined
+
+<Directory /var/www/location_web>
+WSGIProcessGroup app
+WSGIApplicationGroup %{GLOBAL}
+Order deny,allow
+Require all granted
+</Directory>
+
+<Directory /var/www/location_web/static>
+WSGIProcessGroup app
+WSGIApplicationGroup %{GLOBAL}
+Order deny,allow
+Require all granted
+</Directory>
+
+<Directory /var/www/location_web/templates>
+WSGIProcessGroup app
+WSGIApplicationGroup %{GLOBAL}
+Order deny,allow
+Require all granted
+</Directory>
+</VirtualHost>

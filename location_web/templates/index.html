@@ -1,0 +1,95 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>手机定位系统</title>
+    <!--css-->
+    <link href="style/demo.css" rel="stylesheet" type="text/css"/>
+    <!--javascript-->
+    <script src="scripts/jquery-1.9.1.js" type="text/javascript"></script>
+    <script src="scripts/demo.js" type="text/javascript"></script>
+</head>
+<body>
+<div class="demo_main">
+    <fieldset class="demo_title">
+        手机定位系统
+    </fieldset>
+    <fieldset class="demo_content">
+        <div style="min-height: 600px; width: 100%;" id="map">
+        </div>
+
+        <script type="text/javascript">
+            function getLocation() {
+                // 发送 AJAX 请求获取最新的经纬度信息
+                fetch('/get_location')
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.locations) {
+                            map_init(data.locations);
+                        } else {
+                            console.error('Failed to get location:', data.error);
+                        }
+                    })
+                    .catch(error => console.error('Error fetching location:', error));
+            }
+
+            function map_init(markerArr) {
+                var map = new BMap.Map("map");
+                map.clearOverlays();
+                var point = new BMap.Point(120.302623, 31.488199);
+                map.centerAndZoom(point, 11);
+                map.enableScrollWheelZoom(true);
+
+                var ctrlNav = new window.BMap.NavigationControl({
+                    anchor: BMAP_ANCHOR_TOP_LEFT,
+                    type: BMAP_NAVIGATION_CONTROL_LARGE
+                });
+                map.addControl(ctrlNav);
+
+                var ctrlOve = new window.BMap.OverviewMapControl({
+                    anchor: BMAP_ANCHOR_BOTTOM_RIGHT,
+                    isOpen: 1
+                });
+                map.addControl(ctrlOve);
+
+                var ctrlSca = new window.BMap.ScaleControl({
+                    anchor: BMAP_ANCHOR_BOTTOM_LEFT
+                });
+                map.addControl(ctrlSca);
+
+                var point = new Array();
+                var marker = new Array();
+                var info = new Array();
+                for (var i = 0; i < markerArr.length; i++) {
+                    var p0 = markerArr[i].point.split(",")[0];
+                    var p1 = markerArr[i].point.split(",")[1];
+                    point[i] = new window.BMap.Point(p0, p1);
+                    marker[i] = new window.BMap.Marker(point[i]);
+                    map.addOverlay(marker[i]);
+                    marker[i].setAnimation(BMAP_ANIMATION_BOUNCE);
+                    var label = new window.BMap.Label(markerArr[i].title, {offset: new window.BMap.Size(20, -10)});
+                    marker[i].setLabel(label);
+                    info[i] = new window.BMap.InfoWindow("<p style=’font-size:12px;lineheight:1.8em;’>" + markerArr[i].title + "</br>TEL：" + markerArr[i].tel + "</br>Time：" + markerArr[i].time + "</br></p>");
+                }
+                marker[0].addEventListener("mouseover", function () {
+                    this.openInfoWindow(info[0]);
+                });
+                marker[1].addEventListener("mouseover", function () {
+                    this.openInfoWindow(info[1]);
+                });
+                marker[2].addEventListener("mouseover", function () {
+                    this.openInfoWindow(info[2]);
+                });
+            }
+
+            function map_load() {
+                var load = document.createElement("script");
+                load.src = "http://api.map.baidu.com/api?v=3.0&ak=s7gZNberF8ttY0AG0qwl0YYal2yKqUbH&callback=getLocation";
+                document.body.appendChild(load);
+            }
+            window.onload = map_load;
+        </script>
+    </fieldset>
+</div>
+</body>
+</html>

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>登录</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/index.css')}}" tppabs="https://www.17sucai.com/preview/806169/2020-08-27/%E7%82%AB%E9%85%B7%E7%99%BB%E5%BD%95/css/index.css">
+</head>
+<body style="background-image: url({{ url_for('static', filename='images/bg.jpg')}})">
+<canvas class="cavs" width="1575" height="1337"></canvas>
+
+<div class="loginmain">
+    <div class="login-title">
+        <span>管理员登录</span>
+    </div>
+
+    <div class="login-con">
+        <form method="POST" action="/login">
+            <div class="login-user">
+                <div class="icon">
+                    <img src="{{ url_for('static', filename='images/cd-icon-username.png')}}" tppabs="https://www.17sucai.com/preview/806169/2020-08-27/%E7%82%AB%E9%85%B7%E7%99%BB%E5%BD%95/image/cd-icon-username.png" alt="">
+                </div>
+                <input type="text" name="username" placeholder="用户名" autocomplete="off" value="Ellen">
+            </div>
+            <div class="login-pwd">
+                <div class="icon">
+                    <img src="{{ url_for('static', filename='images/cd-icon-password.png')}}" tppabs="https://www.17sucai.com/preview/806169/2020-08-27/%E7%82%AB%E9%85%B7%E7%99%BB%E5%BD%95/image/cd-icon-password.png" alt="">
+                </div>
+                <input type="password" name="password" placeholder="密码" autocomplete="off" value="">
+            </div>
+            <div class="login-btn">
+                <input type="submit" value="登录">
+            </div>
+        </form>
+    </div>
+
+</div>
+
+</body>
+</html>
+
+<script src="{{ url_for('static', filename='js/jquery-1.7.2.js')}}" tppabs="https://www.17sucai.com/preview/806169/2020-08-27/%E7%82%AB%E9%85%B7%E7%99%BB%E5%BD%95/js/jquery-1.7.2.js"></script>
+<script src="{{ url_for('static', filename='js/ban.js')}}" tppabs="https://www.17sucai.com/preview/806169/2020-08-27/%E7%82%AB%E9%85%B7%E7%99%BB%E5%BD%95/js/ban.js"></script>

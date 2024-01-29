@@ -1,0 +1,7 @@
+#!/usr/bin/python2
+# coding=utf-8
+
+import sys
+
+sys.path.append("/var/www/location_web")
+from location_web import app as application
