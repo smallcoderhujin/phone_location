@@ -1,0 +1,6 @@
+.vscode
+.fleet
+.idea
+.cache
+stage
+__pycache__
